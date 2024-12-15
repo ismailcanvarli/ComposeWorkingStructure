@@ -13,14 +13,21 @@ import androidx.navigation.navArgument
 fun NavHoster() {
     val navController = rememberNavController()
 
-    NavHost(navController = navController, startDestination = "homeScreen") {
+    NavHost(navController = navController, startDestination = "bottomBarScreen") {
+        composable("bottomBarScreen") {
+            BottomBarScreen(navController = navController)
+        }
         composable("homeScreen") {
             HomeScreen(navController = navController)
         }
         composable("detailScreen/{message}",
-            arguments = listOf(navArgument("message") { type = NavType.StringType })) {
+            arguments = listOf(navArgument("message") { type = NavType.StringType })
+        ) {
             val message = it.arguments?.getString("message")
             DetailScreen(message = message ?: "No message found")
+        }
+        composable("settingScreen") {
+            SettingScreen()
         }
     }
 }
